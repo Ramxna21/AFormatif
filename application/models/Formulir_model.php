@@ -1,41 +1,62 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Formulir_model extends CI_Model {
-
-    public function __construct() {
+class Formulir_model extends CI_Model
+{
+    public function __construct()
+    {
         parent::__construct();
-        $this->load->database(); // Pastikan database library sudah diload
+        $this->load->database();
     }
 
-    // Fungsi untuk menyimpan data peserta didik
-    public function insert_peserta_didik($data) {
-        return $this->db->insert('peserta_didik', $data);
+    /**
+     * Insert satu baris data ke tabel formulir_siswa
+     * $data: array dengan key = nama kolom tabel, value = data inputan
+     */
+    public function insert($data)
+    {
+        return $this->db->insert('formulir_siswa', $data);
     }
 
-    // Fungsi untuk menyimpan data ayah kandung
-    public function insert_ayah_kandung($data) {
-        return $this->db->insert('ayah_kandung', $data);
+    /**
+     * Update satu baris data di tabel formulir_siswa berdasarkan id
+     */
+    public function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('formulir_siswa', $data);
     }
 
-    // Fungsi untuk menyimpan data ibu kandung
-    public function insert_ibu_kandung($data) {
-        return $this->db->insert('ibu_kandung', $data);
+    /**
+     * Delete satu baris data di tabel formulir_siswa berdasarkan id
+     */
+    public function delete($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->delete('formulir_siswa');
     }
 
-    // Fungsi untuk menyimpan data wali peserta
-    public function insert_wali_peserta($data) {
-        return $this->db->insert('wali_peserta', $data);
+    /**
+     * Ambil semua data dari tabel formulir_siswa
+     */
+    public function get_all()
+    {
+        return $this->db->get('formulir_siswa')->result();
     }
 
-    // Fungsi untuk menyimpan data periodik peserta
-    public function insert_periodik_peserta($data) {
-        return $this->db->insert('periodik_peserta', $data);
+    /**
+     * Ambil data berdasarkan id dari tabel formulir_siswa
+     */
+    public function get_by_id($id)
+    {
+        return $this->db->where('id', $id)->get('formulir_siswa')->row();
     }
 
-    // Anda juga bisa menambahkan fungsi untuk mendapatkan id terakhir yang di-insert
-    // Jika Anda perlu menghubungkan data (misal: id_peserta_didik di tabel ayah)
-    public function get_last_insert_id() {
-        return $this->db->insert_id();
+    /**
+     * Ambil jumlah seluruh data di tabel formulir_siswa
+     */
+    public function count_all()
+    {
+        return $this->db->count_all('formulir_siswa');
     }
 }
